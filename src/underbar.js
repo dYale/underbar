@@ -98,8 +98,15 @@
 
   // Produce a duplicate-free version of the array.
   _.uniq = function(array) {
+    var uniqueArray = [];
+    
+      _.each(array, function(item, index){
+        if(uniqueArray.indexOf(item) === -1){
+          uniqueArray.push(item);
+        }
+      })
+      return uniqueArray;
   };
-
 
   // Return the results of applying an iterator to each element.
   _.map = function(collection, iterator) {
