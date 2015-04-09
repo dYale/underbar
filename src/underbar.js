@@ -199,7 +199,24 @@
   // Determine whether any of the elements pass a truth test. If no iterator is
   // provided, provide a default one
   _.some = function(collection, iterator) {
-    // TIP: There's a very clever way to re-use every() here.
+    iterator = iterator || Boolean;
+    var present = 0;
+     
+     _.each(collection, function(item){
+          if(iterator(item)){
+            present++;
+          }
+        })
+    return present > 0;
+  }
+
+//couldn't think of the "clever method" will keep thinking!
+//also, what should default iterator do?
+
+
+
+    })
+
   };
 
 
@@ -222,11 +239,28 @@
   //     bla: "even more stuff"
   //   }); // obj1 now contains key1, key2, key3 and bla
   _.extend = function(obj) {
+    _.each(Array.prototype.slice.call(arguments,1),function(start){
+        for(var key in start)  
+            obj[key] = start[key];
+        }
+    })
+    return obj;
+}
+
   };
 
   // Like extend, but doesn't ever overwrite a key that already
   // exists in obj
   _.defaults = function(obj) {
+   _.each(Array.prototype.slice.call(arguments,1),function(start){
+        for(var key in start) {  
+          if(!key in obj]) {
+            obj[key] = start[key];
+          } else {
+
+        }
+    })
+    return obj;
   };
 
 
@@ -293,7 +327,19 @@
   // input array. For a tip on how to make a copy of an array, see:
   // http://mdn.io/Array.prototype.slice
   _.shuffle = function(array) {
-  };
+    var newArray = array.slice(0)
+    var length = newArray.length;
+    
+    while (length) {
+      var i = Math.floor(Math.random() * length--);
+      
+      var valueAtIndex = array[i];
+      newArray[i] =  newArray[length];
+      newArray[length] = valueAtIndex;
+    }
+  return newArray;
+}
+
 
 
   /**
