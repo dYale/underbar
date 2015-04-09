@@ -251,17 +251,18 @@
 
   // Like extend, but doesn't ever overwrite a key that already
   // exists in obj
-  _.defaults = function(obj) {
+   _.defaults = function(obj) {
    _.each(Array.prototype.slice.call(arguments,1),function(start){
         for(var key in start) {  
-          if(!key in obj]) {
+          if(!obj[key]) {
             obj[key] = start[key];
-          } else {
-
-        }
-    })
+          } 
+        } 
+      })
     return obj;
   };
+
+
 
 
   /**
@@ -310,7 +311,7 @@
     }
 
     //push result into array, check if arg in array;
-    
+
     return memo;
   };
 
