@@ -303,16 +303,18 @@
   // _.memoize should return a function that, when called, will check if it has
   // already computed the result for the given argument and return that value
   // instead if possible.
-  _.memoize = function(func) {
-    function internal(key) {
-        
-      if (!cache.hasOwnProperty(key)){
-        cache[key] = func.apply(this, arguments);
-      }
-      return cache[key];
-    };
-    
+  __.memoize = function(func) {
     var cache = {};
+    
+    function internal(key) {
+        var keyArray = [];
+        keyArray.push.apply(keyArray, arguments);
+        
+      if (!cache.hasOwnProperty(keyArray)){
+        cache[keyArray] = func.apply(this, arguments);
+      }
+      return cache[keyArray]; 
+    };    
     return internal;
   };
 
