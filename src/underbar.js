@@ -256,8 +256,7 @@
         for(var key in start) {  
           if(!obj[key]) {
             obj[key] = start[key];
-          } 
-        } 
+          }} 
       })
     return obj;
   };
@@ -305,15 +304,18 @@
   // already computed the result for the given argument and return that value
   // instead if possible.
   _.memoize = function(func) {
-    var alreadyCalled = []
-    function memo(arg){
-      return func(arg)
-    }
-
-    //push result into array, check if arg in array;
-
-    return memo;
+    function internal(key) {
+        
+      if (!cache.hasOwnProperty(key)){
+        cache[key] = func.apply(this, arguments);
+      }
+      return cache[key];
+    };
+    
+    var cache = {};
+    return internal;
   };
+
 
   // Delays a function for the given number of milliseconds, and then calls
   // it with the arguments supplied.
@@ -347,7 +349,7 @@
     while (length) {
       var i = Math.floor(Math.random() * length--);
       
-      var valueAtIndex = array[i];
+      var valueAtIndex = newArray[i];
       newArray[i] =  newArray[length];
       newArray[length] = valueAtIndex;
     }
@@ -367,6 +369,7 @@
   // Calls the method named by functionOrKey on each value in the list.
   // Note: You will need to learn a bit about .apply to complete this.
   _.invoke = function(collection, functionOrKey, args) {
+    return functionOrKey.apply(collection, this)}
   };
 
   // Sort the object's values by a criterion produced by an iterator.
@@ -374,6 +377,9 @@
   // of that string. For example, _.sortBy(people, 'name') should sort
   // an array of people by their name.
   _.sortBy = function(collection, iterator) {
+    counter = collection.length;
+    for(var i )
+
   };
 
   // Zip together two or more arrays with elements of the same index
@@ -382,6 +388,10 @@
   // Example:
   // _.zip(['a','b','c','d'], [1,2,3]) returns [['a',1], ['b',2], ['c',3], ['d',undefined]]
   _.zip = function() {
+  .apply
+
+
+
   };
 
   // Takes a multidimensional array and converts it to a one-dimensional array.
@@ -389,11 +399,24 @@
   //
   // Hint: Use Array.isArray to check if something is an array
   _.flatten = function(nestedArray, result) {
+    var newArray
+    if(Array.isArray(nestedArray)){
+      newArray.push.apply(newArray, )
+
+     // .split()
+     // regEX remove all [] 
+     // introduce one at beginning and end
+     // .join()
+
+    }
   };
 
   // Takes an arbitrary number of arrays and produces an array that contains
   // every item shared between all the passed-in arrays.
   _.intersection = function() {
+  var sharedArray = [];
+
+  //put everything of firstArg into sharedArray, compare and keep. Double loop for comparison?
   };
 
   // Take the difference between one array and a number of other arrays.
