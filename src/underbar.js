@@ -41,7 +41,7 @@
     if(n > array.length){
       n = array.length;
     }
-    return n === undefined ? array[array.length - 1] : array.slice(array.length - (1 + n), n); 
+    return n === undefined ? array[array.length - 1] : n === 0 ? [] : array.slice(-n); 
   };
 
   // Call iterator(value, key, collection) for each element of collection.
@@ -163,12 +163,17 @@ _.each = function(collection, iterator) {
   //   }); // should be 5, regardless of the iterator function passed in
   //          No accumulator is given so the first element is used.
   _.reduce = function(collection, iterator, accumulator) {
-      
-      _.each(collection, function(item){
-        accumulator = iterator(accumulator, item)
-      })
+    if(accumulator === undefined){
+      accumulator = collection[0];
+      collection = collection.slice(1);
+    }
+
+    _.each(collection, function(item){
+      accumulator = iterator(accumulator, item);
+    });
     return accumulator;
   };
+
 
 
   // Determine if the array or object contains a given value (using `===`).
@@ -186,17 +191,10 @@ _.each = function(collection, iterator) {
   // Determine whether all of the elements match a truth test.
   _.every = function(collection, iterator) {
     return _.reduce(collection, function(present, item){
-      if(!iterator(item)){
-        present = false;
-      }
-    return present;
+    return present && (iterator === undefined ? item : iterator(item) ? true : false);
     }, true)
   }
 
-      
-
-      ) 
-  };
 
   // Determine whether any of the elements pass a truth test. If no iterator is
   // provided, provide a default one
@@ -214,12 +212,6 @@ _.each = function(collection, iterator) {
 
 //couldn't think of the "clever method" will keep thinking!
 //also, what should default iterator do?
-
-
-
-    })
-
-  };
 
 
   /**
@@ -240,29 +232,27 @@ _.each = function(collection, iterator) {
   //   }, {
   //     bla: "even more stuff"
   //   }); // obj1 now contains key1, key2, key3 and bla
-  _.extend = function(obj) {
-    _.each(Array.prototype.slice.call(arguments,1),function(start){
+    _.extend = function(obj) {
+     _.each(Array.prototype.slice.call(arguments,1),function(start){
+        
         for(var key in start)  
-            obj[key] = start[key];
-        }
-    })
-    return obj;
-}
-
-  };
+          obj[key] = start[key];    
+        })
+      return obj; 
+    }
 
   // Like extend, but doesn't ever overwrite a key that already
   // exists in obj
-   _.defaults = function(obj) {
-   _.each(Array.prototype.slice.call(arguments,1),function(start){
-        for(var key in start) {  
-          if(!obj[key]) {
-            obj[key] = start[key];
-          }} 
-      })
+_.defaults = function(obj) {
+    
+    for(var i = 0, j = arguments.length; i < j; i++){
+        _.each(arguments[i],function(item,key, collection){
+            if(!obj.hasOwnProperty(key))
+                obj[key] = item;
+        })
+    }
     return obj;
-  };
-
+}
 
 
 
@@ -305,7 +295,7 @@ _.each = function(collection, iterator) {
   // _.memoize should return a function that, when called, will check if it has
   // already computed the result for the given argument and return that value
   // instead if possible.
-  __.memoize = function(func) {
+  _.memoize = function(func) {
     var cache = {};
     
     function internal(key) {
@@ -329,8 +319,8 @@ _.each = function(collection, iterator) {
   // call someFunction('a', 'b') after 500ms
   _.delay = function(func, wait) {
     var values = Array.prototype.slice.call(arguments, 2);
-    return setTimeout(function(){
-      return func.apply(null, values);
+     setTimeout(function(){
+       func.apply(null, values);
     }, wait);
   };
 
@@ -347,7 +337,7 @@ _.each = function(collection, iterator) {
   // input array. For a tip on how to make a copy of an array, see:
   // http://mdn.io/Array.prototype.slice
   _.shuffle = function(array) {
-    var newArray = array.slice(0)
+    var newArray = array.slice()
     var length = newArray.length;
     
     while (length) {
@@ -373,7 +363,7 @@ _.each = function(collection, iterator) {
   // Calls the method named by functionOrKey on each value in the list.
   // Note: You will need to learn a bit about .apply to complete this.
   _.invoke = function(collection, functionOrKey, args) {
-    return functionOrKey.apply(collection, this)}
+
   };
 
   // Sort the object's values by a criterion produced by an iterator.
@@ -381,8 +371,7 @@ _.each = function(collection, iterator) {
   // of that string. For example, _.sortBy(people, 'name') should sort
   // an array of people by their name.
   _.sortBy = function(collection, iterator) {
-    counter = collection.length;
-    for(var i )
+
 
   };
 
@@ -392,7 +381,6 @@ _.each = function(collection, iterator) {
   // Example:
   // _.zip(['a','b','c','d'], [1,2,3]) returns [['a',1], ['b',2], ['c',3], ['d',undefined]]
   _.zip = function() {
-  .apply
 
 
 
@@ -403,22 +391,20 @@ _.each = function(collection, iterator) {
   //
   // Hint: Use Array.isArray to check if something is an array
   _.flatten = function(nestedArray, result) {
-    var newArray
-    if(Array.isArray(nestedArray)){
-      newArray.push.apply(newArray, )
+  //  var newArray
+    //if(Array.isArray(nestedArray)){
+     // newArray.push.apply(newArray, )
 
      // .split()
      // regEX remove all [] 
      // introduce one at beginning and end
      // .join()
-
-    }
   };
 
   // Takes an arbitrary number of arrays and produces an array that contains
   // every item shared between all the passed-in arrays.
   _.intersection = function() {
-  var sharedArray = [];
+  //var sharedArray = [];
 
   //put everything of firstArg into sharedArray, compare and keep. Double loop for comparison?
   };
