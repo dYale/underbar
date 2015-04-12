@@ -103,7 +103,7 @@ _.each = function(collection, iterator) {
     var uniqueArray = [];
     
       _.each(array, function(item, index){
-        if(uniqueArray.indexOf(item) === -1){
+        if(_.indexOf(uniqueArray, item) === -1){
           uniqueArray.push(item);
         }
       })
